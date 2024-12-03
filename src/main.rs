@@ -1,10 +1,13 @@
 use std::fs;
+use std::collections::HashMap;
 
 fn main() {
     let day1_input_path = "inputs/day1.txt";
 
     let day1_input = fs::read_to_string(day1_input_path)
         .expect("File should be read");
+
+    // Begin part 1
 
     let mut list1 = Vec::new();
     let mut list2 = Vec::new();
@@ -32,4 +35,22 @@ fn main() {
     let total_dist: i32 = distances.iter().sum();
 
     println!("Total distance between location ID lists: {}", total_dist);
+
+    // Begin part 2
+
+    let mut right_list_id_counts = HashMap::new();
+
+    for id in list2 {
+        let count = right_list_id_counts.entry(id).or_insert(0);
+        *count += 1;
+    }
+
+    let mut similarity_score = 0;
+    for id in list1 {
+        let right_count = right_list_id_counts.get(&id).unwrap_or(&0);
+        similarity_score += right_count * id;
+    }
+
+    println!("Part 2 similarity score: {similarity_score}")
+
 }
