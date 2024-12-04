@@ -18,7 +18,8 @@ fn main() {
             println!("Similarity score: {similarity_score}");
         }
         2 => {
-            days::day2::solve();
+            let safe_count = days::day2::solve();
+            println!("Safe report count: {safe_count}");
         }
         _ => {
             println!("Day {day_to_solve} not implemented yet!");
