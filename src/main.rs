@@ -1,5 +1,6 @@
 use std::env;
 mod days;
+mod utils;
 
 fn main() {
 
@@ -14,9 +15,14 @@ fn main() {
             println!("\nDay 1 solutions");
             println!("----------------------------");
             println!("Total distance between location ID lists: {}", total_dist);
-            println!("Similarity score: {similarity_score}")
+            println!("Similarity score: {similarity_score}");
         }
-        _ => println!("Day {day_to_solve} not implemented yet!")
+        2 => {
+            days::day2::solve();
+        }
+        _ => {
+            println!("Day {day_to_solve} not implemented yet!");
+        }
     }
 
 }
