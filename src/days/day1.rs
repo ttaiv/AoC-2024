@@ -1,7 +1,7 @@
 use std::fs;
 use std::collections::HashMap;
 
-fn main() {
+pub fn solve() -> (i32, i32) {
     let day1_input_path = "inputs/day1.txt";
 
     let day1_input = fs::read_to_string(day1_input_path)
@@ -34,8 +34,6 @@ fn main() {
 
     let total_dist: i32 = distances.iter().sum();
 
-    println!("Total distance between location ID lists: {}", total_dist);
-
     // Begin part 2
 
     let mut right_list_id_counts = HashMap::new();
@@ -51,6 +49,5 @@ fn main() {
         similarity_score += right_count * id;
     }
 
-    println!("Part 2 similarity score: {similarity_score}")
-
+    return (total_dist, similarity_score)
 }
