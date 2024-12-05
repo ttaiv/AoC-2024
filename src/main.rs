@@ -12,14 +12,13 @@ fn main() {
     match day_to_solve {
         1 => {
             let (total_dist, similarity_score) =  days::day1::solve();
-            println!("\nDay 1 solutions");
-            println!("----------------------------");
             println!("Total distance between location ID lists: {}", total_dist);
             println!("Similarity score: {similarity_score}");
         }
         2 => {
-            let safe_count = days::day2::solve();
-            println!("Safe report count: {safe_count}");
+            let safe_counts = days::day2::solve();
+            println!("Safe report without problem dampener: {}", safe_counts.0);
+            println!("Safe reports with problem dampener: {}", safe_counts.1);
         }
         _ => {
             println!("Day {day_to_solve} not implemented yet!");
