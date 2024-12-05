@@ -3,7 +3,7 @@ use crate::utils;
 pub fn solve() -> (u32, u32) {
     let reports = utils::parse_input(2);
 
-    let safe_count: u32 = 
+    let safe_count_part1: u32 = 
         reports.iter()
         .filter(|&report| is_safe(&report))
         .count()
@@ -17,7 +17,7 @@ pub fn solve() -> (u32, u32) {
         .try_into()
         .expect("usize should be converted to u32");
 
-    (safe_count, safe_count_part2)
+    (safe_count_part1, safe_count_part2)
 }
 
 fn is_safe(report: &[i32]) -> bool {
@@ -70,7 +70,12 @@ fn is_safe_with_problem_dampener(report: &Vec<i32>) -> bool {
     false
 }
 
-fn is_safe_with_problem_dampener_does_not_work(report: &Vec<i32>) -> bool {
+// This misses three reports that should be safe
+// [26, 25, 22, 24, 23]
+// [66, 68, 67, 68, 70]
+// [32, 35, 33, 34, 35, 38]
+#[allow(dead_code)]
+fn is_safe_with_problem_dampener2(report: &Vec<i32>) -> bool {
     if report.len() < 2 {
         // Report with one or zero levels is always safe.
         return true;
