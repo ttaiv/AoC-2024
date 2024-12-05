@@ -49,6 +49,33 @@ fn is_safe_with_problem_dampener(report: &Vec<i32>) -> bool {
         return true;
     }
 
+    if is_safe(report) {
+        return true;
+    }
+
+    // Try if the report if safe if one level is ignored.
+    for skip_idx in 0..report.len() {
+
+        let before_skip = &report[..skip_idx];
+        let after_skip = &report[skip_idx + 1..];
+        let modified_report: Vec<i32> = before_skip.iter()
+            .chain(after_skip.iter())
+            .cloned()
+            .collect();
+
+        if is_safe(&modified_report) {
+            return true;
+        }
+    }
+    false
+}
+
+fn is_safe_with_problem_dampener_does_not_work(report: &Vec<i32>) -> bool {
+    if report.len() < 2 {
+        // Report with one or zero levels is always safe.
+        return true;
+    }
+
     // Test if all levels are decreasing with at most one skip.
     if is_safe_with_skip(report, true) {
         return true;
