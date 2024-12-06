@@ -20,6 +20,10 @@ fn main() {
             println!("Safe report without problem dampener: {}", safe_counts.0);
             println!("Safe reports with problem dampener: {}", safe_counts.1);
         }
+        3 => {
+            let result = days::day3::solve();
+            println!("Sum of multiplications is {result}");
+        }
         _ => {
             println!("Day {day_to_solve} not implemented yet!");
         }
