@@ -1,6 +1,5 @@
 use std::env;
-mod days;
-mod utils;
+use aoc::days;
 
 fn main() {
 
