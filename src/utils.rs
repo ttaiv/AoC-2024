@@ -1,5 +1,6 @@
 use std::fs;
 
+/// Parses the text file for given day to a vector of vectors of integers.
 pub fn parse_input(day_num: u32) -> Vec<Vec<i32>> {
     let input_path = format!("inputs/day{day_num}.txt");
 
@@ -17,4 +18,38 @@ pub fn parse_input(day_num: u32) -> Vec<Vec<i32>> {
         .collect();
 
     return input_arr;
+}
+
+pub struct Array2D {
+    data: Vec<char>,
+    num_rows: usize,
+    num_cols: usize
+}
+
+impl Array2D {
+    pub fn from_file(file_path: &str) -> Self {
+        let contents = fs::read_to_string(file_path)
+            .expect("Input file should be available");
+
+        let rows: Vec<&str> = contents.lines().collect();
+
+        let num_rows = rows.len();
+        let num_cols = rows.get(0).map_or(0, |row| row.chars().count());
+
+        let data: Vec<char> = rows.iter().flat_map(|&row| row.chars()).collect();
+
+        Self {
+            data,
+            num_rows,
+            num_cols,
+        }
+    }
+
+    pub fn get(&self, row: usize, col: usize) -> Option<&char> {
+        if row < self.num_rows && col < self.num_cols {
+            Some(&self.data[row * self.num_cols + col])
+        } else {
+            None
+        }
+    }
 }
