@@ -20,13 +20,26 @@ pub fn parse_input(day_num: u32) -> Vec<Vec<i32>> {
     return input_arr;
 }
 
+#[derive(Debug)]
 pub struct Array2D {
     data: Vec<char>,
     num_rows: usize,
-    num_cols: usize
+    num_cols: usize,
 }
 
 impl Array2D {
+    pub fn data(&self) -> &[char] {
+        &self.data
+    }
+
+    pub fn num_rows(&self) -> usize {
+        self.num_rows
+    }
+
+    pub fn num_cols(&self) -> usize {
+        self.num_cols
+    }
+
     pub fn from_file(file_path: &str) -> Self {
         let contents = fs::read_to_string(file_path)
             .expect("Input file should be available");

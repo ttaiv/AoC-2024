@@ -24,6 +24,10 @@ fn main() {
             println!("Sum of multiplications in part 1 is {}", result.0);
             println!("Sum of multiplications in part 2 {}", result.1);
         }
+        4 => {
+            let result = days::day4::solve();
+            println!("{}", result);
+        }
         _ => {
             println!("Day {day_to_solve} not implemented yet!");
         }
