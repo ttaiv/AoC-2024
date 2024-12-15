@@ -26,7 +26,8 @@ fn main() {
         }
         4 => {
             let result = days::day4::solve();
-            println!("{}", result);
+            println!("Part 1 result: {}", result.0);
+            println!("Part 2 result: {}", result.1);
         }
         _ => {
             println!("Day {day_to_solve} not implemented yet!");

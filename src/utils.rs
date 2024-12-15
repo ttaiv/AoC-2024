@@ -59,7 +59,7 @@ impl Array2D {
     }
 
     pub fn get(&self, row: usize, col: usize) -> Option<&char> {
-        if row < self.num_rows && col < self.num_cols {
+        if row < self.num_rows() && col < self.num_cols() {
             Some(&self.data[row * self.num_cols + col])
         } else {
             None
