@@ -20,6 +20,22 @@ pub fn parse_input(day_num: u32) -> Vec<Vec<i32>> {
     return input_arr;
 }
 
+/// Parses the given string slice to a vector of vectors of unsigned integers.
+pub fn parse_str_slice_to_integers(contents: &str, sep: &str) -> Vec<Vec<u32>> {
+
+    let input_arr: Vec<Vec<u32>> = contents
+        .lines()
+        .map(|line| {
+            line.split(sep)
+            .map(|num| num.parse::<u32>()
+            .expect("Rows should contain valid numbers"))
+            .collect()
+        })
+        .collect();
+
+    return input_arr;
+}
+
 #[derive(Debug)]
 pub struct Array2D {
     data: Vec<char>,
