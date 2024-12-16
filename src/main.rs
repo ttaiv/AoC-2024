@@ -26,12 +26,19 @@ fn main() {
         }
         4 => {
             let result = days::day4::solve();
-            println!("Part 1 result: {}", result.0);
-            println!("Part 2 result: {}", result.1);
+            default_print_results(result);
+        }
+        5 => {
+            default_print_results(days::day5::solve());
         }
         _ => {
             println!("Day {day_to_solve} not implemented yet!");
         }
     }
 
+}
+
+fn default_print_results(result: (u32, u32)) {
+    println!("Part 1 result: {}", result.0);
+    println!("Part 2 result: {}", result.1);
 }
