@@ -1,5 +1,5 @@
-use std::fs;
 use regex::Regex;
+use std::fs;
 
 pub fn solve() -> (i32, i32) {
     let data = fs::read_to_string("inputs/day3.txt").unwrap();
@@ -41,26 +41,29 @@ pub fn solve() -> (i32, i32) {
                 // No do left, no multiplications left.
                 break;
             }
-            Some(mat) => {{
-                // Update the location of current do and start looking for
-                // don't and multiplications again.
-                current_do = mat.end();
-            }}
+            Some(mat) => {
+                {
+                    // Update the location of current do and start looking for
+                    // don't and multiplications again.
+                    current_do = mat.end();
+                }
+            }
         }
     }
 
     (part1_result, part2_result)
 }
 
-fn find_and_calculate_muls(data : &str) -> i32 {
+fn find_and_calculate_muls(data: &str) -> i32 {
     let re = Regex::new(r"mul\((\d+),(\d+)\)").unwrap();
 
-    let result: i32 =  re.captures_iter(&data)
+    let result: i32 = re
+        .captures_iter(&data)
         .map(|caps| {
-        // Make pairs of numbers to be multiplied.
-        let num1: i32 = caps[1].parse().unwrap();
-        let num2: i32 = caps[2].parse().unwrap();
-        (num1, num2)
+            // Make pairs of numbers to be multiplied.
+            let num1: i32 = caps[1].parse().unwrap();
+            let num2: i32 = caps[2].parse().unwrap();
+            (num1, num2)
         })
         .map(|(num1, num2)| num1 * num2) // Do the multiplication
         .sum();

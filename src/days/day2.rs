@@ -3,15 +3,15 @@ use crate::utils;
 pub fn solve() -> (u32, u32) {
     let reports = utils::parse_input(2);
 
-    let safe_count_part1: u32 = 
-        reports.iter()
+    let safe_count_part1: u32 = reports
+        .iter()
         .filter(|&report| is_safe(&report))
         .count()
         .try_into()
         .expect("usize should be converted to u32");
 
-    let safe_count_part2: u32 = 
-        reports.iter()
+    let safe_count_part2: u32 = reports
+        .iter()
         .filter(|&report| is_safe_with_problem_dampener(&report))
         .count()
         .try_into()
@@ -29,12 +29,11 @@ fn is_safe(report: &[i32]) -> bool {
     let decreasing = report[0] > report[1];
 
     for adj_levels in report.windows(2) {
-        let diff = 
-            if decreasing {
-                adj_levels[0] - adj_levels[1]
-            } else {
-                adj_levels[1] - adj_levels[0]
-            };
+        let diff = if decreasing {
+            adj_levels[0] - adj_levels[1]
+        } else {
+            adj_levels[1] - adj_levels[0]
+        };
 
         if diff < 1 || diff > 3 {
             return false;
@@ -55,10 +54,10 @@ fn is_safe_with_problem_dampener(report: &Vec<i32>) -> bool {
 
     // Try if the report if safe if one level is ignored.
     for skip_idx in 0..report.len() {
-
         let before_skip = &report[..skip_idx];
         let after_skip = &report[skip_idx + 1..];
-        let modified_report: Vec<i32> = before_skip.iter()
+        let modified_report: Vec<i32> = before_skip
+            .iter()
             .chain(after_skip.iter())
             .cloned()
             .collect();
@@ -96,7 +95,7 @@ fn is_safe_with_problem_dampener2(report: &Vec<i32>) -> bool {
         let mut it_right = report.iter();
         let mut level_left = it_right.next().unwrap();
         let mut skip_available = true;
-    
+
         while let Some(level_right) = it_right.next() {
             let diff = {
                 if decreasing {
@@ -105,7 +104,7 @@ fn is_safe_with_problem_dampener2(report: &Vec<i32>) -> bool {
                     level_right - level_left
                 }
             };
-        
+
             if diff < 1 || diff > 3 {
                 if skip_available {
                     skip_available = false;
@@ -119,5 +118,4 @@ fn is_safe_with_problem_dampener2(report: &Vec<i32>) -> bool {
         }
         true
     }
-    
 }

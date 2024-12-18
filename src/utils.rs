@@ -4,16 +4,17 @@ use std::fs;
 pub fn parse_input(day_num: u32) -> Vec<Vec<i32>> {
     let input_path = format!("inputs/day{day_num}.txt");
 
-    let contents = fs::read_to_string(input_path)
-        .expect("Input file should be available");
+    let contents = fs::read_to_string(input_path).expect("Input file should be available");
 
     let input_arr: Vec<Vec<i32>> = contents
         .lines()
         .map(|line| {
             line.split_whitespace()
-            .map(|num| num.parse::<i32>()
-            .expect("Rows should contain valid numbers"))
-            .collect()
+                .map(|num| {
+                    num.parse::<i32>()
+                        .expect("Rows should contain valid numbers")
+                })
+                .collect()
         })
         .collect();
 
@@ -30,11 +31,8 @@ where
         .lines()
         .map(|line| {
             line.split(sep)
-            .map(|num| {
-                num.parse::<T>()
-                .expect("Rows should contain valid numbers")
-            })
-            .collect()
+                .map(|num| num.parse::<T>().expect("Rows should contain valid numbers"))
+                .collect()
         })
         .collect();
 
@@ -62,8 +60,7 @@ impl Array2D {
     }
 
     pub fn from_file(file_path: &str) -> Self {
-        let contents = fs::read_to_string(file_path)
-            .expect("Input file should be available");
+        let contents = fs::read_to_string(file_path).expect("Input file should be available");
 
         let rows: Vec<&str> = contents.lines().collect();
 

@@ -1,5 +1,5 @@
-use std::usize;
 use crate::utils::Array2D;
+use std::usize;
 
 enum Direction {
     North,
@@ -9,7 +9,7 @@ enum Direction {
     South,
     Southwest,
     West,
-    Northwest
+    Northwest,
 }
 
 pub fn solve() -> (u32, u32) {
@@ -22,7 +22,10 @@ pub fn solve() -> (u32, u32) {
 }
 
 fn solve_part1(arr: &Array2D) -> u32 {
-    let result: usize = arr.data().iter().enumerate()
+    let result: usize = arr
+        .data()
+        .iter()
+        .enumerate()
         .filter(|(_, &c)| c == 'X') // Find all indices where XMAS can begin
         .map(|(idx, _)| count_part1(idx, arr)) // Count how many XMAS words begins on this index
         .sum();
@@ -31,7 +34,10 @@ fn solve_part1(arr: &Array2D) -> u32 {
 }
 
 fn solve_part2(arr: &Array2D) -> u32 {
-    let result = arr.data().iter().enumerate()
+    let result = arr
+        .data()
+        .iter()
+        .enumerate()
         .filter(|(_, &c)| c == 'A') // Find all indices that have A and thus X-MAS
         .filter(|(idx, _)| is_xmas(*idx, arr)) // Check if it is X-MAS
         .count();
@@ -54,10 +60,11 @@ fn count_part1(idx: usize, arr: &Array2D) -> usize {
         Direction::South,
         Direction::Southeast,
         Direction::Southwest,
-        Direction::West
+        Direction::West,
     ];
 
-    let matches = directions.iter()
+    let matches = directions
+        .iter()
         .filter(|&dir| is_match_in_dir(&x_loc, arr, dir, "XMAS"))
         .count();
 
@@ -71,14 +78,13 @@ fn is_match_in_dir(x_loc: &(i32, i32), arr: &Array2D, dir: &Direction, word: &st
     let calculate_offset = make_offset_calculator(dir);
 
     for (offset, letter) in word.chars().enumerate() {
-
         let loc = calculate_offset(x_loc_converted, offset.try_into().unwrap());
 
         // If loc cannot be converted to usize, it is not a valid index and
         // we cannot have match.
         let loc_usize: (usize, usize) = match (loc.0.try_into(), loc.1.try_into()) {
             (Ok(row), Ok(col)) => (row, col),
-            (Err(_), _) | (_, Err(_)) => return false
+            (Err(_), _) | (_, Err(_)) => return false,
         };
 
         let current = arr.get(loc_usize.0, loc_usize.1);
@@ -107,17 +113,18 @@ fn is_xmas(idx: usize, arr: &Array2D) -> bool {
         Direction::Northwest,
         Direction::Northeast,
         Direction::Southeast,
-        Direction::Southwest
+        Direction::Southwest,
     ];
     // Directions to look for 'MAS' after going to the starting index.
     let search_directions = [
         Direction::Southeast,
         Direction::Southwest,
         Direction::Northwest,
-        Direction::Northeast
+        Direction::Northeast,
     ];
 
-    let mas_count = start_directions.iter()
+    let mas_count = start_directions
+        .iter()
         .map(|dir| make_offset_calculator(dir)(x_loc, 1)) // Get potential MAS start indices
         .zip(search_directions.iter())
         // Count MASes
@@ -125,20 +132,30 @@ fn is_xmas(idx: usize, arr: &Array2D) -> bool {
         .count();
 
     mas_count == 2 // A is the middle of X-MAS if there is exactly two MASes around it
-
 }
-
 
 /// Return a function that calculates (row, col) from a starting (row, col) to a certain direction
 fn make_offset_calculator(dir: &Direction) -> fn((i32, i32), i32) -> (i32, i32) {
     match dir {
-        Direction::North => |start_loc: (i32, i32), offset: i32| (start_loc.0 - offset, start_loc.1),
-        Direction::Northeast => |start_loc: (i32, i32), offset: i32| (start_loc.0 - offset, start_loc.1 + offset),
+        Direction::North => {
+            |start_loc: (i32, i32), offset: i32| (start_loc.0 - offset, start_loc.1)
+        }
+        Direction::Northeast => {
+            |start_loc: (i32, i32), offset: i32| (start_loc.0 - offset, start_loc.1 + offset)
+        }
         Direction::East => |start_loc: (i32, i32), offset: i32| (start_loc.0, start_loc.1 + offset),
-        Direction::Southeast => |start_loc: (i32, i32), offset: i32| (start_loc.0 + offset, start_loc.1 + offset),
-        Direction::South => |start_loc: (i32, i32), offset: i32| (start_loc.0 + offset, start_loc.1),
-        Direction::Southwest => |start_loc: (i32, i32), offset: i32| (start_loc.0 + offset, start_loc.1 - offset),
+        Direction::Southeast => {
+            |start_loc: (i32, i32), offset: i32| (start_loc.0 + offset, start_loc.1 + offset)
+        }
+        Direction::South => {
+            |start_loc: (i32, i32), offset: i32| (start_loc.0 + offset, start_loc.1)
+        }
+        Direction::Southwest => {
+            |start_loc: (i32, i32), offset: i32| (start_loc.0 + offset, start_loc.1 - offset)
+        }
         Direction::West => |start_loc: (i32, i32), offset: i32| (start_loc.0, start_loc.1 - offset),
-        Direction::Northwest => |start_loc: (i32, i32), offset: i32| (start_loc.0 - offset, start_loc.1 - offset),
+        Direction::Northwest => {
+            |start_loc: (i32, i32), offset: i32| (start_loc.0 - offset, start_loc.1 - offset)
+        }
     }
 }
