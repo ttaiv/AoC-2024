@@ -1,6 +1,6 @@
 use std::fs;
 use std::collections::{HashMap, HashSet};
-use crate::utils::parse_str_slice_to_integers;
+use crate::utils::parse_str_slice;
 
 pub fn solve() -> (u32, u32) {
     // Get info about which numbers come after a certain number and all the updates.
@@ -101,7 +101,7 @@ fn parse_input() -> (HashMap<u32, HashSet<u32>>, Vec<Vec<u32>>) {
         .expect("The input should contain two line breaks separating the rules and updates");
 
     let update_data = &data[sep + 2..];
-    let updates = parse_str_slice_to_integers(update_data, ",");
+    let updates = parse_str_slice(update_data, ",");
 
     (successors, updates)
 }

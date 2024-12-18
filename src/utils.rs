@@ -21,14 +21,19 @@ pub fn parse_input(day_num: u32) -> Vec<Vec<i32>> {
 }
 
 /// Parses the given string slice to a vector of vectors of unsigned integers.
-pub fn parse_str_slice_to_integers(contents: &str, sep: &str) -> Vec<Vec<u32>> {
-
-    let input_arr: Vec<Vec<u32>> = contents
+pub fn parse_str_slice<T>(contents: &str, sep: &str) -> Vec<Vec<T>>
+where
+    T: std::str::FromStr,
+    T::Err: std::fmt::Debug,
+{
+    let input_arr: Vec<Vec<T>> = contents
         .lines()
         .map(|line| {
             line.split(sep)
-            .map(|num| num.parse::<u32>()
-            .expect("Rows should contain valid numbers"))
+            .map(|num| {
+                num.parse::<T>()
+                .expect("Rows should contain valid numbers")
+            })
             .collect()
         })
         .collect();
